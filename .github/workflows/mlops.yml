@@ -19,13 +19,13 @@ jobs:
         run: |
           pip install scikit-learn joblib pytest
 
-      - name: Run tests
-        run: |
-          pytest tests/
-
       - name: Train ML model
         run: |
           python src/train_model.py
+
+      - name: Run tests
+        run: |
+          pytest tests/
 
       - name: Upload trained model
         uses: actions/upload-artifact@v2
