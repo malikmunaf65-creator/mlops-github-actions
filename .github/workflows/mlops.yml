@@ -1,0 +1,34 @@
+name: MLOps Lab Pipeline
+
+on: [push]
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install scikit-learn joblib pytest
+
+      - name: Run tests
+        run: |
+          pytest tests/
+
+      - name: Train ML model
+        run: |
+          python src/train_model.py
+
+      - name: Upload trained model
+        uses: actions/upload-artifact@v2
+        with:
+          name: trained-model
+          path: models/
